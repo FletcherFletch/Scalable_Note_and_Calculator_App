@@ -1,7 +1,7 @@
 import stripe
 from decouple import config 
 
-
+#Change test
 
 DJANGO_DEBUG=config("DJANGO_DEBUG", default=False, cast=bool)
 STRIPE_SECRET_KEY = config("STRIPE_SECRET_KEY", default="", cast=str)
