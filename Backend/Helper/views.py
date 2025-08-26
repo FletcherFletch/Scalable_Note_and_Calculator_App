@@ -1,8 +1,21 @@
+import billing
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import get_user_model
+from django.urls import reverse
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
+from django.conf import settings
+from django.http import HttpResponseBadRequest
 
 User = get_user_model()
+
+BASE_URL = settings.BASE_URL
+
+def product_price_redirect_view(request, price_id=None, *args, **kwargs):
+    request.session[''] = price_id
+    return redirect("")
 
 def login_view(request):
     if request.method == "POST":
@@ -29,4 +42,6 @@ def register_view(request):
         except:
             pass
     return render(request, "auth/register.html", {})
+
+
 
