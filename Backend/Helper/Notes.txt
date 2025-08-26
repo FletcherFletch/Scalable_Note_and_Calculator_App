@@ -1,0 +1,11 @@
+Views - 
+
+Views are needed when something requires an HTTP request to the backend(like a page load, form,
+submission, API call, or Stripe event)
+
+Ex Login page, Stripe Checkout, Webhook receiver, Show profile, Post form, Return JSON
+Login_view(request), create_checkout_session(request) stripe_webhook(request), profile_view(request, username)
+create_post(request), @api_view(['GET]) def get_data(request): return Response(...)
+
+
+Above examples of each item in order
