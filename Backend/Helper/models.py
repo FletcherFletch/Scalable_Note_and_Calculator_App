@@ -12,7 +12,7 @@ class Stripe_Customer(models.Model):
     # name = models.CharField(max_length=30)
     init_email = models.EmailField(blank=True, null=True)
    # email= models.CharField(max_length=100)
-    stripe_id = models.CharField(max_length=300)
+    stripe_id = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return f"{self.user.username}"
@@ -31,6 +31,11 @@ class Stripe_Customer(models.Model):
                 self.stripe_id = stripe_id
         super().save(*args, **kwargs)
 
+class Product(models.Model):
+    name = models.CharField(max_length=40)
+    stripe_price_id = models.CharField(max_length=300)
+
+    
             
 
     

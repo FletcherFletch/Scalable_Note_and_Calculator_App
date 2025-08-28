@@ -16,7 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from Helper.views import about_view, home_view, login_view, placeholder_view
+from users.views import NotesView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('home/', home_view, name='Home'),
+    path('Login/', login_view, name='Login'),
+    path('user/', placeholder_view, name='user_subscription'),
+    path('user2/', placeholder_view, name="account_logout"),
+    path('notes/', NotesView.as_view(), name='notes'),
 ]
