@@ -21,5 +21,12 @@
 </head>
 <body>
     <h1>Homepage</h1>
+
+        {% if user.is_authenticated %}
+            <p>Welcome, {{ user.username }}! Stripe id {{user.user_stripe_id|default: "not linked to stripe"}}</p>
+        {% else %}
+            <p>Welcome, Guest!</p>
+        {% endif %}
+        
 </body>
 </html>

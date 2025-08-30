@@ -12,7 +12,7 @@ class CustomUser(AbstractUser):
     #For Stripe User
     # email = models.CharField(max_length=100)
     # name = models.CharField(max_length=20)
-    stripe_id = models.CharField(max_length=200, null=True, blank=True)
+    user_stripe_id = models.CharField(max_length=500, null=True, blank=True)
 
     USERNAME_FIELD = 'username'
 

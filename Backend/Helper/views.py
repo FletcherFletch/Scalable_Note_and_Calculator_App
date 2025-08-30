@@ -1,3 +1,4 @@
+import stripe
 import json
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
@@ -11,6 +12,8 @@ from django.http import HttpResponseBadRequest, JsonResponse, HttpResponse
 from .models import Product
 from django.views.decorators.csrf import csrf_exempt
 from Helper.billing import start_checkout_session 
+from django.shortcuts import render
+from Helper.billing import create_customer
 
 User = get_user_model()
 
@@ -30,7 +33,7 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 print("Login here")
-                return redirect("/Home")
+                return redirect("/home/")
     return render(request, "Login.html", {})
 
 def register_view(request):
@@ -41,9 +44,16 @@ def register_view(request):
         password = request.POST.get("password") or None
 
         try:
-            User.objects.create_user(username, email=email, password=password)
-        except:
-            pass
+            user = User.objects.create_user(username, email=email, password=password)
+            user.save()
+
+            stripe_id = create_customer(name=username, email=email)
+
+            user.user_stripe_id = stripe_id
+            user.save()
+
+        except Exception as e:
+            print(f"Error: {e}")
     return render(request, "auth/register.html", {})
 
 @login_required
@@ -51,6 +61,9 @@ def home_view(request, *args, **kwargs):
     if request.user.is_authenticated:
         print(request.user.username)
     return about_view(request, *args, **kwargs)
+
+def homepage(request):
+    return render(request, 'hompage.html', {'user': request.User})
 
 def about_view(request, *args, **kwargs):
 
