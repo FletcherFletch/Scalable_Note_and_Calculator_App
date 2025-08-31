@@ -33,7 +33,7 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 print("Login here")
-                return redirect("/home/")
+                return redirect("home")
     return render(request, "Login.html", {})
 
 def register_view(request):
@@ -47,13 +47,21 @@ def register_view(request):
             user = User.objects.create_user(username, email=email, password=password)
             user.save()
 
-            stripe_id = create_customer(name=username, email=email)
+            try:
 
-            user.user_stripe_id = stripe_id
-            user.save()
+                stripe_id = create_customer(name=username, email=email)
+            
 
+                user.user_stripe_id = stripe_id
+                user.save()
+            except Exception as stripe_error:
+                print(f"stripe customer creation failed: {stripe_error}")
+            
+            return redirect("Login")   
         except Exception as e:
             print(f"Error: {e}")
+
+    
     return render(request, "auth/register.html", {})
 
 @login_required
