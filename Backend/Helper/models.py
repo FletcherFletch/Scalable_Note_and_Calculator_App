@@ -33,8 +33,17 @@ class Stripe_Customer(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=40)
-    stripe_price_id = models.CharField(max_length=300)
+    stripe_price_id = models.CharField(max_length=300, blank=True, null=True)
+    stripe_product_id = models.CharField(max_length=255, blank=True, null=True)
+    discription = models.TextField(blank=True)
+    price_cents = models.IntegerField(blank=True, null=True)
 
+    def __str__(self):
+        return self.name
+
+
+#make with admin method 
+#also make products with shell method
     
             
 

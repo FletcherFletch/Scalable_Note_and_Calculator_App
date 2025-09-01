@@ -20,13 +20,29 @@
     </style>
 </head>
 <body>
-    <h1>Homepage</h1>
+        <div class="content">
+        <h1>Homepage</h1>
 
         {% if user.is_authenticated %}
-            <p>Welcome, {{ user.username }}! Stripe id {{user.user_stripe_id}}</p>
+            <p>Welcome, {{ user.username }}! Stripe ID: {{ user.user_stripe_id }}</p>
         {% else %}
             <p>Welcome, Guest!</p>
         {% endif %}
-        
+    </div>
+
+    {% for product in products %}
+        <div class="product">
+            <h2>{{ product.name }}</h2>
+            <p>{{ product.discription }}</p>
+            <p>Price: ${{ product.price_cents|floatformat:2 }}</p>
+
+            <form action="{% url 'price' product.id %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="customer_id" value="{{ user.user_stripe_id }}">
+                <input type="hidden" name="price_id" value="{{ product.stripe_price_id }}">
+                <button type="submit" class="buy-button">Buy {{ product.name }}</button>
+            </form>
+        </div>
+    {% endfor %}
 </body>
 </html>
