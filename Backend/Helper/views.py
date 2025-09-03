@@ -155,13 +155,19 @@ def payment_cancel(request, *args, **kwargs):
     all_notes = Notes.objects.all()
     if request.method == 'POST':
         content = request.POST.get('Note')
+        title = request.POST.get('Note')
         if content:
-            notes = Notes.objects.create(content=content)          
-            print(f"Note_check: {notes.content}")            
+            notes = Notes.objects.create(content=content, title=title)          
+            print(f"Note_check: {notes.content}, Title_Check: {notes.title}")            
             return redirect('display_notes')
-        
+   
     return render(request, 'NoteDisplay.html', {'canceled': canceled, 'notes': all_notes,})
 
+def delete_note(request, note_id):
+    if request.method == 'POST':
+        note = get_object_or_404(Notes, id=note_id)
+        note.delete()
+    return redirect('display_notes')
 
 def note_display(request, *args, **kwargs):
     notes = Notes.objects.all()

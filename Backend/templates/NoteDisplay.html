@@ -5,12 +5,73 @@
     <meta charset="UTF-8">
     <title>Notes</title>
     <style>
-    
+        body{
+             font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            justify-content: center;
+            align-items: center;
+            background-color: #f4f4f4;
+        }
+
+        .header {
+            width: 100%;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header h1 {
+            margin: 0 0 10px;
+            font-size: 24px;
+        }
+
+        .header p {
+            margin: 0;
+            color: #555;
+            font-size: 16px;
+        }
+                
+        .notes-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+            justify-content: flex-start;
+        }
+
+        .note-box {
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            padding: 15px;
+            width: 300px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        .note-header {
+            margin-bottom: 10px;
+        }
+
+
+        .note-content {
+            font-size: 1em;
+            white-space: pre-wrap; /* preserves line breaks */
+        }
+
+
+
 
     </style>
 </head>
 <body>
-        <div class="content">
+        <div class="header">
         <h1>Notes</h1>
 
             {% if user.is_authenticated %}
@@ -24,9 +85,33 @@
 
        <form method="POST">
             {% csrf_token %}
+            <textarea name="Note_title" placeholder="Enter title for note gng"></textarea>
             <textarea name="Note" placeholder="You can write note here "></textarea>
             <button type="submit">Save Note</button>
        </form>
+
+       <div class="notes-container">
+        <h1>Your Notes</h1>
+            {% for note in notes %}
+                <div class="note-box">
+                    <div class="note-header">
+                        <strong><p>{{note.title}}</p></strong>
+                        
+                    </div>
+                    <div class="notes-container">
+                        <p>{{note.content}}</p>
+                    </div>
+                    <form method="POST" action="{% url 'delete_note' note.id%}">
+                        {% csrf_token %}
+                        <button type="delete"> Delete Note</button>
+                    </form>
+                    
+                </div>
+                
+            {% empty %}
+                <p>No notes yet</p>
+            {% endfor %}
+       </div>
 
 
   
