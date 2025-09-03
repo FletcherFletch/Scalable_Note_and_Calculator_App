@@ -1,0 +1,33 @@
+<!-- templates/home.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Notes</title>
+    <style>
+    
+
+    </style>
+</head>
+<body>
+        <div class="content">
+        <h1>Notes</h1>
+
+        {% if user.is_authenticated %}
+            <p>Welcome, {{ user.username }}! These are your Notes</p>
+        {% else %}
+            <p> Bruh Something is wrong </p>
+        </div>
+
+
+
+       <form method="POST">
+            {% csrf_token %}
+            <textarea name="Note" placeholder="You can write note here "></textarea>
+            <button type="submit">Save Note</button>
+       </form>
+
+
+  
+</body>
+</html>

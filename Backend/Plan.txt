@@ -1,0 +1,3 @@
+Add a notes page that displays when payment is successful (or canceled)
+Add Note button to be under Homepage words 
+

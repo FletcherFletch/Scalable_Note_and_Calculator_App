@@ -10,6 +10,7 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.http import HttpResponseBadRequest, JsonResponse, HttpResponse
 from .models import Product
+from users.models import Notes
 from django.views.decorators.csrf import csrf_exempt
 from Helper.billing import start_checkout_session 
 from django.shortcuts import render
@@ -19,7 +20,7 @@ from django.shortcuts import get_object_or_404
 
 DOMAIN = "http://127.0.0.1:8000"
 success_url = f"{DOMAIN}/home/?success=1"
-cancel_url = f"{DOMAIN}/home/?canceled=1"
+cancel_url = f"{DOMAIN}/home/?canceled=true"
 User = get_user_model()
 
 BASE_URL = settings.BASE_URL
@@ -126,7 +127,7 @@ def create_price(request, django_product_id):
         stripe_price_id = create_stripe_price(
             currency = "usd",
             product = product.stripe_product_id,
-            unit_amount= "9999",
+            unit_amount= "0",
         )
 
         product.stripe_price_id = stripe_price_id
@@ -147,6 +148,25 @@ def create_price(request, django_product_id):
     )
 
     return redirect(session, code=303)
+
+
+def payment_cancel(request):
+    canceled = request.GET.get('canceled') == 'true'
+    return render(request, 'NoteDisplay.html', {'canceled': canceled})
+
+
+def note_display(request, *args, **kwargs):
+    notes = Notes.objects.all()
+    my_title = "note"
+    html_template = "NoteDisplay"
+    my_context = {
+        "page_title": my_title,
+        "notes": notes,
+    }
+
+    return render(request, html_template, my_context)
+
+
 #dont use session.url just session because session returns session.url in the helper function 
 #redirect sends GET request, checkout view want the POST request 
 

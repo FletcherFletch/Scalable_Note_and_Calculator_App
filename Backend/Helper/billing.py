@@ -39,7 +39,7 @@ def create_product (name="",
 
 def create_stripe_price ( currency = "usd",
                   product = "",
-                  unit_amount = "9999",
+                  unit_amount = "0",
                   metadata={},
                   raw=False,):
     if product is None:

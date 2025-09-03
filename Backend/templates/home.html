@@ -8,6 +8,7 @@
         body {
             font-family: Arial, sans-serif;
             display: flex;
+            flex-direction: column;
             height: 100vh;
             margin: 0;
             justify-content: center;
@@ -16,6 +17,15 @@
         }
         h1 {
             color: #333;
+        }
+
+        .product {
+            background-color: lightblue;
+            height: 100px;
+        }
+        .content{
+            background-color: greenyellow;
+            height: 100;
         }
     </style>
 </head>
@@ -28,7 +38,8 @@
         {% else %}
             <p>Welcome, Guest!</p>
         {% endif %}
-    </div>
+        </div>
+
 
     {% for product in products %}
         <div class="product">
