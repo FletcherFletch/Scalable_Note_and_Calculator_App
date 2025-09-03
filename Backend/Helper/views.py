@@ -20,7 +20,7 @@ from django.shortcuts import get_object_or_404
 
 DOMAIN = "http://127.0.0.1:8000"
 success_url = f"{DOMAIN}/home/?success=1"
-cancel_url = f"{DOMAIN}/home/?canceled=true"
+cancel_url = f"{DOMAIN}/notes/?canceled=true"
 User = get_user_model()
 
 BASE_URL = settings.BASE_URL
@@ -150,9 +150,17 @@ def create_price(request, django_product_id):
     return redirect(session, code=303)
 
 
-def payment_cancel(request):
+def payment_cancel(request, *args, **kwargs):
     canceled = request.GET.get('canceled') == 'true'
-    return render(request, 'NoteDisplay.html', {'canceled': canceled})
+    all_notes = Notes.objects.all()
+    if request.method == 'POST':
+        content = request.POST.get('Note')
+        if content:
+            notes = Notes.objects.create(content=content)          
+            print(f"Note_check: {notes.content}")            
+            return redirect('display_notes')
+        
+    return render(request, 'NoteDisplay.html', {'canceled': canceled, 'notes': all_notes,})
 
 
 def note_display(request, *args, **kwargs):

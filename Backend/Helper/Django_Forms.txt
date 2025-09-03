@@ -1,0 +1,13 @@
+Saving Form inputs 
+
+Render a form in a template
+
+then on submit django receives the form via POST
+
+you then handle and save the data in the view
+
+then redirect or show message if needed
+
+first make notes with simple manually getting textarea
+
+make something else with django forms 

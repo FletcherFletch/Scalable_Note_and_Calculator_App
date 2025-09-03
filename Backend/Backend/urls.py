@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from Helper.views import about_view, home_view, login_view, placeholder_view, register_view, create_price, note_display
+from Helper.views import about_view, payment_cancel, home_view, login_view, placeholder_view, register_view, create_price, note_display
 from users.views import NotesView
 from rest_framework.routers import DefaultRouter
 
@@ -35,6 +35,6 @@ urlpatterns = [
     path('register/', register_view, name='register'),
   #  path('checkout/<int:django_product_id>/', create_checkout_view, name='checkout'),
     path('price/<int:django_product_id>/', create_price, name="price"),
-    path('?canceled=true/', note_display, name="display_notes"),
+    path('notes/', payment_cancel, name="display_notes"),
     path('', include(router.urls)),
 ]
