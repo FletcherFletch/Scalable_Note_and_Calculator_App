@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from Helper.views import about_view, payment_cancel, delete_note, home_view, login_view, placeholder_view, register_view, create_price, note_display
+from Helper.views import about_view, back_login, payment_cancel, delete_note, home_view, login_view, placeholder_view, register_view, create_price, note_display
 from users.views import NotesView
 from rest_framework.routers import DefaultRouter
 

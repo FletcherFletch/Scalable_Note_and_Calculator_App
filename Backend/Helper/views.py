@@ -149,6 +149,11 @@ def create_price(request, django_product_id):
 
     return redirect(session, code=303)
 
+def back_login(request):
+    #if request.method == 'POST':
+
+    return redirect(request, 'Login.html')
+
 
 def payment_cancel(request, *args, **kwargs):
     canceled = request.GET.get('canceled') == 'true'

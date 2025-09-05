@@ -71,6 +71,16 @@
     </style>
 </head>
 <body>
+
+        <div>
+            <form method="POST" action="{% url 'Login'%}">
+                {% csrf_token %}
+                <button type="submit">Back to Login</button>
+            </form>
+            
+        </div>
+
+
         <div class="header">
         <h1>Notes</h1>
 
