@@ -90,29 +90,32 @@
             <button type="submit">Save Note</button>
        </form>
 
-       <div class="notes-container">
-        <h1>Your Notes</h1>
-            {% for note in notes %}
-                <div class="note-box">
-                    <div class="note-header">
-                        <strong><p>{{note.title}}</p></strong>
+       {% if user.is_authenticated %}
+            <div class="notes-container">
+                <h1>Your Notes</h1>
+                    {% for note in notes %}
+                        <div class="note-box">
+                            <div class="note-header">
+                                <strong><p>{{note.title}}</p></strong>
+                                
+                            </div>
+                            <div class="notes-content">
+                                <p>{{note.content}}</p>
+                            </div>
+                            <form method="POST" action="{% url 'delete_note' note.id%}">
+                                {% csrf_token %}
+                                <button type="submit"> Delete Note</button>
+                            </form>
+                            
+                        </div>
                         
-                    </div>
-                    <div class="notes-container">
-                        <p>{{note.content}}</p>
-                    </div>
-                    <form method="POST" action="{% url 'delete_note' note.id%}">
-                        {% csrf_token %}
-                        <button type="delete"> Delete Note</button>
-                    </form>
-                    
-                </div>
-                
-            {% empty %}
-                <p>No notes yet</p>
-            {% endfor %}
-       </div>
-
+                    {% empty %}
+                        <p>No notes yet</p>
+                    {% endfor %}
+            </div>
+        {% else %}
+            <p>Login in to see your noteds</p>
+        {% endif %}
 
   
 </body>

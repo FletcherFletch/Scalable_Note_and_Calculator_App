@@ -152,12 +152,13 @@ def create_price(request, django_product_id):
 
 def payment_cancel(request, *args, **kwargs):
     canceled = request.GET.get('canceled') == 'true'
-    all_notes = Notes.objects.all()
+    all_notes = Notes.objects.filter(user=request.user)
+
     if request.method == 'POST':
         content = request.POST.get('Note')
         title = request.POST.get('Note')
         if content:
-            notes = Notes.objects.create(content=content, title=title)          
+            notes = Notes.objects.create(user=request.user, content=content, title=title)          
             print(f"Note_check: {notes.content}, Title_Check: {notes.title}")            
             return redirect('display_notes')
    
